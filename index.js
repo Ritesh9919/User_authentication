@@ -2,21 +2,51 @@ require('dotenv').config();
 const express = require('express');
 const port = 8000;
 const db = require('./db/mongoose');
-const path = require('path');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const passport = require('passport');
+const passportLocal = require('./middleware/passportLocalStrategy');
+const passportGoogle = require('./middleware/passportGoogleOauthStrategy');
+const nodemailer = require('nodemailer');
 
 const app = express();
 
-//middleware
-app.use(express.json());
+app.use(cookieParser())
+app.use(express.urlencoded({extended:false}));
 app.use(express.static('./public'));
+
+
 
 // setting view engine
 app.set('view engine', 'ejs');
-app.set('ejs', path.join(__dirname, 'views'));
 
-app.get('/', (req, res) => {
-  return res.send('Hello Moon');
-})
+
+app.use(session({
+  name:'authentication',
+  secret:process.env.SESSION_SECRET,
+  saveUninitialized:false,
+  resave:false,
+  cookie:{
+      maxAge:(2000 * 60 * 100)
+  },
+  store:MongoStore.create({
+      mongoUrl:'mongodb://127.0.0.1:27017/UserAuthentication',
+      autoRemove:'disabled'
+  })
+}));
+
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(passport.setAuthenticatedUser);
+
+
+
+
+
+
 
 app.use('/', require('./routes'));
 

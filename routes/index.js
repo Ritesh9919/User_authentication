@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const homeController = require('../controllers/homeController');
+router.get('/', homeController.home);
+router.use('/users', require('./userRoute'));
 
-router.use('/api/v1/users', require('./userRoute'));
 
 module.exports = router;

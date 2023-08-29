@@ -1,0 +1,31 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(7, 57, 236);
+}
+
+.title{
+    margin-left: 20px;
+    color:white;
+}
+
+.nav-link{
+    margin-right: 50px;
+    font-size: 23px;
+    display: flex;
+    gap:10px;
+}
+
+.nav-link a{
+    text-decoration: none;
+    color:white;
+    font-weight: bold;
+}
