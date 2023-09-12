@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const port = 8000;
-const db = require('./db/mongoose');
+const connectDB = require('./db/mongoose');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
@@ -51,6 +51,16 @@ app.use(passport.setAuthenticatedUser);
 app.use('/', require('./routes'));
 
 
-app.listen(port, ()=> {
+const start = async() => {
+  try{
+ await connectDB(process.env.MONGO_URI);
+ app.listen(port, () => {
   console.log(`Server is running on port:${port}`);
-})
+ })
+} catch(err) {
+  console.log(err);
+  return;
+}
+}
+
+start();

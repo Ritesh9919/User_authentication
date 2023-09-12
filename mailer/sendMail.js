@@ -5,8 +5,8 @@ const sendEmail = async function(name, email, origin, token) {
       host: 'smtp.ethereal.email',
       port: 587,
       auth: {
-          user: 'alexandrea.hegmann@ethereal.email',
-          pass: 'CX84qugbGKHRkt64Ux'
+          user: 'madge.shanahan81@ethereal.email',
+          pass: 'svb6175XrDw92ytfx4'
       }
   });
       const resetUrl = `${origin}/users/reset-password/${token}`;
